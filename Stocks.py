@@ -6,7 +6,7 @@ stocks = [
     "BIDU", "CRM", "TSLA", "TWLO", "PLTR", "AI", "INTC",
     "QCOM", "AMD", "ORCL", "SAP", "SIEGY", "HON",
     "GE", "MU", "ROBO", "PATH", "ZM", "DOCU", "SQ", "SHOP",
-    "SPLK", "TTD", "CRWD", "ZS", "SNOW", "FTNT", "ADSK",
+    "SPLK", "CRWD", "ZS", "SNOW", "FTNT", "ADSK",
     "ADBE", "ASML", "SNPS", "CDNS", "ANSS", "TER", "KYCCF",
     "OMRNY", "0020.HK", "002230.SZ",
 ]
