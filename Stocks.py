@@ -1,11 +1,19 @@
 import yfinance as yf
 
 # List of desired stock symbols
-stocks = ["AAPL", "MSFT", "GOOGL", "AMZN", "META", "IBM", "NVDA"]
+stocks = [
+    "AAPL", "MSFT", "GOOGL", "AMZN", "META", "IBM", "NVDA",
+    "BIDU", "CRM", "TSLA", "TWLO", "PLTR", "AI", "INTC",
+    "QCOM", "AMD", "ORCL", "SAP", "SIEGY", "HON",
+    "GE", "MU", "ROBO", "PATH", "ZM", "DOCU", "SQ", "SHOP",
+    "SPLK", "TTD", "CRWD", "ZS", "SNOW", "FTNT", "ADSK",
+    "ADBE", "ASML", "SNPS", "CDNS", "ANSS", "TER", "KYCCF",
+    "OMRNY", "0020.HK", "002230.SZ",
+]
 
 # Define the time period
-start_date = "2024-02-26"
-end_date = "2024-03-26"
+start_date = "2024-02-23"
+end_date = "2024-03-22"
 
 
 
@@ -24,14 +32,8 @@ summary_df['Avg Closing Price'] = summary_df.index.map(average_closing_by_date)
 # Check current data types
 print(summary_df.dtypes)
 
-# # Define the file path where you want to save the CSV file
-# file_path = 'D:/Datasets/stock_summary.csv'
-#
-# # Export the summary DataFrame to a CSV file
-# summary_df.to_csv(file_path, index=True)
-#
-# print(f"File saved to {file_path}")
 
-# print(summary_df)
+print(summary_df)
+
 
 
