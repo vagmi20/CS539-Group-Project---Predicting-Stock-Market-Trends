@@ -13,6 +13,8 @@ Because multiple companies may be mentioned in a single article, we observe the 
 
 To obtain the sentiment for each article for a single company, we feed the scraped content (including the title) of each article into a sentiment analysis model. For the model, we use a distilled version of [RoBERTa-base-model](https://huggingface.co/mrm8488/distilroberta-finetuned-financial-news-sentiment-analysis) pretrained on the [financial_phrasebank](https://huggingface.co/datasets/financial_phrasebank) dataset.
 
+### Notes
+We provide notebook files for generating our data via Google Colab. However, these notebook files require access to our MongoDB database. Instead, these notebooks are merely to understand our generation process. For using the data, we provide the necessary csvs with the features for training. 
 
 # Preprocessing
 
