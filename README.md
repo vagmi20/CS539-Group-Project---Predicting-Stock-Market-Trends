@@ -9,8 +9,6 @@ We use FinnHub to retrieve the data and save the output to [stocks.csv](https://
 
 Because each stock in the AI sector has a different impact on the overall market, we weigh each stock's influence on the general trend of the sector via Market Capitalization. The formula involves the outstanding shares of each stock, which we pull manually and save to the [outstanding_shares_final.csv](https://github.com/vagmi20/CS539_groupProject/blob/main/data/outstanding_shares_final.csv). 
 
-Because each stock in the AI sector has a different impact on the overall market, we weigh each stock's influence on the general trend of the sector via Market Capitalization. The formula involves the outstanding shares of each stock, which we pull manually and save to the [outstanding_shares_final.csv](https://github.com/vagmi20/CS539_groupProject/blob/main/data/outstanding_shares_final.csv). 
-
 ### News/Sentiment
 For sentiment analysis, we use NewsAPI to query relevant articles from various news sources. We use both the stock ticker name and the full name of each company as search words. Since NewsAPI is limited and can only provide brief sentences from the articles, we manually webscrape the data by querying the links instead and using BeautifulSoup + URLLib3 to parse the HTML into text.
 
