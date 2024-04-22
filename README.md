@@ -1,29 +1,34 @@
-# CS539 Group Project - Predicting General Market Trends for the AI Sector using News Sentiment Analysis
-Given yesterday's stock data and news for a single company related to AI technology, we would like to predict how the overall market for the AI sector will change **tomorrow**. This will help investors observe the impact invidivual companies may have on the overall market for companies involved in AI. 
+# CS539 Group Project - Predicting Stock Market Trends Using News Sentiment Analysis
+Given yesterday's stock data and news for a single company, we would like to predict whether the stock will have an uptrend or downtrend **tomorrow**. This will help investors observe how the news may impact the performance of a particular company's stock.
+
+# Dependencies
+All code is written in notebooks made from Google Colab. Simply running the pip install cells should be sufficient to download dependencies. Note that there are Google Drive import cells which may be ignored. All necessary files are given in the data folder. A list of dependencies will still be provided below. 
+- Pandas
+- Numpy
+- HuggingFace Transformers library
+- Torch for CUDA 12.1
+- urllib3
+- YFinance
+- GNews
+
 
 # Data
 ### Stocks
-We fetch the last 30 days (2024-03-03 to 2024-04-02) of stock data specifically for 45 companies related to AI technology. A list of all companies used can be viewed [here](https://github.com/vagmi20/CS539_groupProject/blob/main/data/AI_Companies_Stock_List.csv).
-
-We use FinnHub to retrieve the data and save the output to [stocks.csv](https://github.com/vagmi20/CS539_groupProject/blob/main/data/stocks.csv). 
-
-Because each stock in the AI sector has a different impact on the overall market, we weigh each stock's influence on the general trend of the sector via Market Capitalization. The formula involves the outstanding shares of each stock, which we pull manually and save to the [outstanding_shares_final.csv](https://github.com/vagmi20/CS539_groupProject/blob/main/data/outstanding_shares_final.csv). 
+We fetch the last 2 years (2022-01-03 to 2023-12-29) of stock data specifically for Apple, NVIDIA, and Meta. YFinance is used to retrieve stock data for all companies. Outputs are saved in the format `{ticker_name}_stock.csv`.
 
 ### News/Sentiment
-For sentiment analysis, we use NewsAPI to query relevant articles from various news sources. We use both the stock ticker name and the full name of each company as search words. Since NewsAPI is limited and can only provide brief sentences from the articles, we manually webscrape the data by querying the links instead and using BeautifulSoup + URLLib3 to parse the HTML into text.
+For sentiment analysis, we use GNews to query relevant articles from the Google News database. We use both the stock ticker name and the full name of each company as search words. Since NewsAPI is limited and can only provide brief sentences from the articles, we manually webscrape the data by querying the links instead and using BeautifulSoup + URLLib3 to parse the HTML into text. News articles for companies are saved as `{ticker_name}_news.csv`. 
 
-Because multiple companies may be mentioned in a single article, we observe the frequency of each ticker/company name throughout an article and take the most frequently mentioned company/stock as the main target of the article sentiment. 
+For manually generating the stock and news data, run all cells in `datagen/Stock_and_News_Data.ipynb`. Note, we already provide these files in `data`. If you would like to run it yourself, please change the csv paths whenever `.to_csv()' is mentioned. 
 
-To obtain the sentiment for each article for a single company, we feed the scraped content (including the title) of each article into a sentiment analysis model. For the model, we use a distilled version of [RoBERTa-base-model](https://huggingface.co/mrm8488/distilroberta-finetuned-financial-news-sentiment-analysis) pretrained on the [financial_phrasebank](https://huggingface.co/datasets/financial_phrasebank) dataset.
+To obtain the sentiment for each article for a single company, we feed the scraped content (including the title) of each article into a sentiment analysis model. For the model, we use a distilled version of [RoBERTa-base-model](https://huggingface.co/mrm8488/distilroberta-finetuned-financial-news-sentiment-analysis) pretrained on the [financial_phrasebank](https://huggingface.co/datasets/financial_phrasebank) dataset. Sentiment output files are saved as `{ticker_name}_sentiment.csv`. 
 
-### Notes
-We provide notebook files for generating our data via Google Colab. However, these notebook files require access to our MongoDB database. Instead, these notebooks are merely to understand our generation process. For using the data, we provide the necessary csvs with the features for training. 
-
-# Preprocessing
+For running sentiment analysis, run all cells in `datagen/Sentiment_Analysis.ipynb`. We also provide these files in `data`. Ensure the `csv=` and `.to_csv()` paths are changed accordingly. 
 
 
-# Training
+# Feature Engineering
+Run all cells in `datagen/Feature_Engineering.ipynb` to combine stock and sentiment features. Again, ensure the `csv=` and `.to_csv()` paths are changed accordingly. 
 
 
-# Inference
+# Training and Inference
 
