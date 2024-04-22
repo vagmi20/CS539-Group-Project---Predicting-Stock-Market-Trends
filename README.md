@@ -27,7 +27,7 @@ For running sentiment analysis, run all cells in `datagen/Sentiment_Analysis.ipy
 
 
 # Feature Engineering
-Run all cells in `datagen/Feature_Engineering.ipynb` to combine stock and sentiment features. Again, ensure the `csv=` and `.to_csv()` paths are changed accordingly. 
+Run all cells in `datagen/Feature_Engineering.ipynb` to combine stock and sentiment features. Again, ensure the `csv=` and `.to_csv()` paths are changed accordingly. Note, this data is already provided in `data/{ticker_name}_stock_with_sentiment.csv`.
 
 
 # Training and Inference
