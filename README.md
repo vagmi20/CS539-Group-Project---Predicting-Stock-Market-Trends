@@ -26,17 +26,17 @@ To obtain the sentiment for each article for a single company, we feed the scrap
 For running sentiment analysis, run all cells in `datagen/Sentiment_Analysis.ipynb`. We also provide these files in `data`. Ensure the `csv=` and `.to_csv()` paths are changed accordingly. 
 
 
-# Feature Engineering
+## Feature Engineering
 Run all cells in `datagen/Feature_Engineering.ipynb` to combine stock and sentiment features. Again, ensure the `csv=` and `.to_csv()` paths are changed accordingly. Note, this data is already provided in `data/{ticker_name}_stock_with_sentiment.csv`.
 
 
-# Training and Inference
+## Training and Inference
 For training all models and obtaining inference results, run the `Predicting_Stock_Trend_With_Sentiment.ipynb` notebook. Make sure to change the `csv` path with the correct local csv containing both stock and sentiment features. 
 
 
-# Demo
+## Demo
 We provide demo code that uses the `DecisionTreeClassifier` model. The demo shows how performance changes with and without sentiment features and also how different news sentiment affects the model's prediction for one day's worth of stock data. Run `Demo.ipynb` for the demo. Make sure to change `csv` paths for local usage.
 
 
-# Acknowledgements
+## Acknowledgements
 1. https://github.com/alisonmitchell/Stock-Prediction
