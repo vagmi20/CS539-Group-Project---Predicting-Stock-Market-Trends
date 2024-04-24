@@ -1,7 +1,7 @@
 # CS539 Group Project - Predicting Stock Market Trends Using News Sentiment Analysis
 Given yesterday's stock data and news for a single company, we would like to predict whether the stock will have an uptrend or downtrend **tomorrow**. This will help investors observe how the news may impact the performance of a particular company's stock.
 
-# Dependencies
+## Dependencies
 All code is written in notebooks made from Google Colab. Simply running the pip install cells should be sufficient to download dependencies. Note that there are Google Drive import cells which may be ignored. All necessary files are given in the data folder. A list of dependencies will still be provided below. 
 - Pandas
 - Numpy
@@ -12,7 +12,7 @@ All code is written in notebooks made from Google Colab. Simply running the pip 
 - GNews
 
 
-# Data
+## Data
 ### Stocks
 We fetch the last 2 years (2022-01-03 to 2023-12-29) of stock data specifically for Apple, NVIDIA, and Meta. YFinance is used to retrieve stock data for all companies. Outputs are saved in the format `{ticker_name}_stock.csv`.
 
