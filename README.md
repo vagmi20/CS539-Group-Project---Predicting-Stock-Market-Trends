@@ -31,4 +31,8 @@ Run all cells in `datagen/Feature_Engineering.ipynb` to combine stock and sentim
 
 
 # Training and Inference
+For training all models and obtaining inference results, run the `Predicting_Stock_Trend_With_Sentiment.ipynb` notebook. Make sure to change the `csv` path with the correct local csv containing both stock and sentiment features. 
+
+
+# Demo
 
