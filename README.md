@@ -35,4 +35,8 @@ For training all models and obtaining inference results, run the `Predicting_Sto
 
 
 # Demo
+We provide demo code that uses the `DecisionTreeClassifier` model. The demo shows how performance changes with and without sentiment features and also how different news sentiment affects the model's prediction for one day's worth of stock data. Run `Demo.ipynb` for the demo. Make sure to change `csv` paths for local usage.
 
+
+# Acknowledgements
+1. https://github.com/alisonmitchell/Stock-Prediction
