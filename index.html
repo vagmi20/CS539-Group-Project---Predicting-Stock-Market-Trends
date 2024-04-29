@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS539: Predicting Stock Market Trends Using News Sentiment Analysis</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="title-block">
+            <h1>Predicting Stock Market Trends Using News Sentiment Analysis</h1>
+            <h4>CS539 Group Project</h4>
+            <h4>Vagmi Bhagavathula, Jared Chan, Deepti Gosukonda, Adina Palayoor, Bishoy Soliman-Hanna</h4>
+        </div>
+
+        <h2>Project Motivation</h2>
+        <p>We wanted to determine if we could use a combination of past stock data with the overall sentiment in the news for a company to determine whether the company's stock will increase or decrease. This will help investors observe how the news may impact the performance of a particular company's stock.</p>
+
+        <h2>Data</h2>
+        <h3>Stock Data</h3>
+        <p>We fetch the last 2 years (2022-01-03 to 2023-12-29) of stock data specifically for APPLE, NVIDIA, and META. Yahoo Finance is used to retrieve stock data for all companies. Outputs are saved in the format <code>{ticker_name}_stock.csv</code>.</p>
+
+        <h3>News Data</h3>
+        <p>For gathering the news data, we used Google News to query relevant articles from the Google News database. We use both the stock ticker name and the full name of each company as search words. Since NewsAPI is limited and can only provide brief sentences from the articles, we manually webscrape the data by querying the links instead and using BeautifulSoup + URLLib3 to parse the HTML into text. News articles for companies are saved as <code>{ticker_name}_news.csv</code>.</p>
+
+        <h3>Sentiment Data</h3>
+        <p>To obtain the sentiment for each article for a single company, we feed the scraped content (including the title) of each article into a sentiment analysis model. For the model, we use a distilled version of <a href="https://huggingface.co/mrm8488/distilroberta-finetuned-financial-news-sentiment-analysis">RoBERTa-base-model</a> pretrained on the <a href="https://huggingface.co/datasets/financial_phrasebank">financial_phrasebank</a> dataset. Sentiment output files are saved as <code>{ticker_name}_sentiment.csv</code>.</p>
+
+        <h2>Tools and Methods</h2>
+        
+        <p>All code is written in Python using Google Collab. Simply running the pip install cells should be sufficient to download dependencies. Note that there are Google Drive import cells which may be ignored. All necessary files are given in the data folder.</p>
+
+        <p>Additionally, there are some technologies utilized that supported our work in this project:</p>
+<ul>
+    <li><img src="Yahoo.png" alt="Yahoo Finance Logo" class="tech-logo"> Yahoo Finance API: used to gather stock data for the three companies</li>
+    <li><img src="gNews.png" alt="Google News Logo" class="tech-logo"> Google News API: used to retrieve the news data for a particular company</li>
+    <li><img src="hFace.png" alt="Hugging Face Logo" class="tech-logo"> Hugging Face: used to obtain the sentiment scores for the news data</li>
+</ul>
+
+
+        <h2>Running the Code</h2>
+        <ul>
+        <li>
+          <a href="https://github.com/vagmi20/CS539-Group-Project---Predicting-Stock-Market-Trends">Github for Project</a></li>
+        <li> <a href="https://github.com/vagmi20/CS539-Group-Project---Predicting-Stock-Market-Trends/blob/main/README.md">READ ME</a>
+       
+      </li>
+      </ul>
+    
+        <p>For manually generating the stock and news data, run all cells in <code>datagen/Stock_and_News_Data.ipynb</code>. Note, we already provide these files in <code>data</code>. If you would like to run it yourself, please change the csv paths whenever <code>.to_csv()</code> is mentioned.</p>
+
+        <p>For running sentiment analysis, run all cells in <code>datagen/Sentiment_Analysis.ipynb</code>. We also provide these files in <code>data</code>. Ensure the <code>csv=</code> and <code>.to_csv()</code> paths are changed accordingly.</p>
+
+        <h3>Feature Engineering</h3>
+        <p>Run all cells in <code>datagen/Feature_Engineering.ipynb</code> to combine stock and sentiment features. Again, ensure the <code>csv=</code> and <code>.to_csv()</code> paths are changed accordingly. Note, this data is already provided in <code>data/{ticker_name}_stock_with_sentiment.csv</code>.</p>
+
+        <h3>Training and Inference</h3>
+        <p>For training all models and obtaining inference results, run the <code>Predicting_Stock_Trend_With_Sentiment.ipynb</code> notebook. Make sure to change the <code>csv</code> path with the correct local csv containing both stock and sentiment features.</p>
+
+        <h2>Results</h2>
+        <p>We ran 8 machine learning models to determine which one was able to predict if a company was going to have an upward or downward trend in their stocks with the best accuracy. The accuracies for these models change based on the company we are looking at. Below we give a preview of the accuracy metrics as well as the confusion matrix specifically for NVIDIA.</p>
+
+        <h3>Random Forest</h3>
+<div class="model-results">
+  <img src="RFResults.png" alt="RandomForest Results" class="results-img">
+  <img src="RFConf.png" alt="RandomForest Confusion Matrix" class="matrix-img">
+</div>
+        <h3>AdaBoost</h3>
+        <div class="model-results">
+            <img src="AdaBoostResults.png" alt="AdaBoost Results" class="results-img">
+            <img src="AdaBoostConf.png" alt="AdaBoostConf Confusion Matrix" class="matrix-img">
+          </div>
+        <h3>Gradient Boosting</h3>
+        <div class="model-results">
+            <img src="GradientResults.png" alt="Gradient Results" class="results-img">
+            <img src="GradientConf.png" alt="Gradient Confusion Matrix" class="matrix-img">
+          </div>
+        <h3>Logistic Regression</h3>
+        <div class="model-results">
+            <img src="LogisticResults.png" alt="Logistic Results" class="results-img">
+            <img src="LogisticConf.png" alt="Logistic Confusion Matrix" class="matrix-img">
+          </div>
+        <h3>GaussianNB</h3>
+        <div class="model-results">
+            <img src="GaussianResults.png" alt="GaussianResults" class="results-img">
+            <img src="GaussianConf.png" alt="Gaussian Confusion Matrix" class="matrix-img">
+          </div>
+        <h3>SVM</h3>
+        <div class="model-results">
+            <img src="SVMResults.png" alt="SVM Results" class="results-img">
+            <img src="SVMConf.png" alt="SVM Confusion Matrix" class="matrix-img">
+          </div>
+        <h3>Decision Tree</h3>
+        <div class="model-results">
+            <img src="DTResults.png" alt="Decision Tree Results" class="results-img">
+            <img src="DTConf.png" alt="Decision Tree Confusion Matrix" class="matrix-img">
+          </div>
+        <h3>Neural Network</h3>
+
+        <h2>Overview of Models</h2>
+        <p>Below we have the graphs displaying the results of the models as well as a table summarizing the results of each machine learning model for each company. The model with the best accuracy for a particular company is highlighted in green.</p>
+        <div class="image-container">
+<img src="NVDAGraph.png" alt="NVIDIA Model Overview" class="overview-img-nvidia">
+<img src="MetaGraph.png" alt="META Model Overview" class="overview-img-meta">
+<img src="AppleGraph.png" alt="APPLE Model Overview" class="overview-img-apple">
+</div>
+<table class="model-overview-table">
+  <thead>
+  <tr>
+      <th>Model</th>
+      <th>Accuracy NVIDIA</th>
+      <th>Accuracy META</th>
+      <th>Accuracy APPLE</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+      <th>Random Forest</th>
+      <td>0.435</td>
+      <td>0.490</td>
+      <td>0.557</td>
+  </tr>
+  <tr>
+      <th>AdaBoost</th>
+      <td>0.478</td>
+      <td>0.449</td>
+      <td>0.505</td>
+  </tr>
+  <tr>
+      <th>Gradient Boosting</th>
+      <td>0.424</td>
+      <td>0.449</td>
+      <td>0.526</td>
+  </tr>
+  <tr>
+      <th>Logistic Regression</th>
+      <td>0.446</td>
+      <td>0.459</td>
+      <td>0.454</td>
+  </tr>
+  <tr>
+      <th>GaussianNB</th>
+      <td>0.413</td>
+      <td>0.459</td>
+      <td>0.433</td>
+  </tr>
+  <tr>
+      <th>SVM</th>
+      <td class="highlight">0.576</td>
+      <td class="highlight">0.531</td>
+      <td>0.433</td>
+  </tr>
+  <tr>
+      <th>Decision Tree</th>
+      <td>0.467</td>
+      <td>0.469</td>
+      <td>0.608</td>
+  </tr>
+  <tr>
+      <th>Neural Network</th>
+      <td>0.435</td>
+      <td>0.469</td>
+      <td class="highlight">0.629</td>
+  </tr>
+</tbody>
+</table>
+
+
+        
+
+        <h2>Demo</h2>
+        <p>We provide demo code that uses the <code>DecisionTreeClassifier</code> model. The demo shows how performance changes with and without sentiment features and also how different news sentiment affects the model's prediction for one day's worth of stock data. Run <code>Demo.ipynb</code> for the demo. Make sure to change <code>csv</code> paths for local usage.</p>
+
+        <h2>Acknowledgements</h2>
+            <ul><a href="https://github.com/alisonmitchell/Stock-Prediction">Alison Mitchell - Stock Prediction</a></ul>
+    </div>
+</body>
+</html>
