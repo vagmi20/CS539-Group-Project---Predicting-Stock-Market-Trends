@@ -14,8 +14,10 @@
             <h4>Team: Vagmi Bhagavathula, Jared Chan, Deepti Gosukonda, Adina Palayoor, Bishoy Soliman-Hanna</h4>
         </div>
 
+
         <h2>Project Overview</h2>
         <p>This project explores the potential of integrating historical stock performance data with real-time news sentiment to predict future stock movements. Our aim is to provide investors with a tool to assess the impact of news sentiment on stock prices, thereby supporting informed investment decisions.</p>
+
 
         <h2>Methodology</h2>
         <p>We utilized Python for its robust data processing capabilities and efficient implementation of machine learning models. The project's source code and detailed setup instructions are available on GitHub:</p>
@@ -33,16 +35,20 @@
             <li><img src="hFace.png" alt="Hugging Face Logo" class="tech-logo">Hugging Face: for sentiment analysis</li>
         </ul>
 
+
         <h2>Data Collection and Processing</h2>
         <h3>Stock Data</h3>
         <p>We collected two years of stock data for Apple, NVIDIA, and Meta from Yahoo Finance. The attributes captured include Date, Adjusted Close, Open, High, Low, Close, and Volume. Below is a sample of this dataset:</p>
         <img src="stock.png" alt="Stock Data example" class="stock-img">
 
+
         <h3>News Data</h3>
         <p>News data was gathered using Google News queries, which extracted articles containing information on these companies. We utilized BeautifulSoup and URLLib3 for web scraping, as NewsAPI provided only limited text snippets.</p>
 
+
         <h3>Sentiment Analysis</h3>
         <p>Each news article was analyzed to extract sentiment (negative, neutral, positive), which was then used to augment our stock data for predictive modeling.</p>
+
 
         <h2>Feature Engineering and Model Training</h2>
         <p>From these datasets we were able to gather 6 features from the daily sentiment analysis- the number of articles by sentiment class(negative,neutral, positive) and the mean probability by sentiment class(negative, neutral, positive). In total we got 7 stock features in addition to these 6 features from the sentiment analysis.</p>
@@ -50,8 +56,53 @@
         <p>Using our features from the sentiment and stock data and our generated labels, we were able to run 8 machine learning models which we review in the next section.</p>
         <p>Finally, to output the results of these models we used an Ensemble method which would iterate over a dictionary of models, train them with predefined parameters, and evaluates them using the test dataset. It then identifies the best-performing model based on the highest accuracy score from the stored results. At the end of this method, it prints a comprehensive overviews of all tested models, listing their accuracies for a quick comparison.</p>
 
+
         <h2>Results</h2>
-        <p>Our analysis included a comprehensive evaluation of eight different machine learning models. The effectiveness of each model varied by company, influenced by the distinct characteristics of their stock and news data. Here is an overview of the models tested:</p>
+        <p>Our analysis included a comprehensive evaluation of eight different machine learning models. Below we review the results in terms of the best parameters, accuracy and the confusion matrix for each machine learning model specifically for NVIDIA as an example.</p>
+
+        <h3>Random Forest</h3>
+<div class="model-results">
+  <img src="RFResults.png" alt="RandomForest Results" class="results-img">
+  <img src="RFConf.png" alt="RandomForest Confusion Matrix" class="matrix-img">
+</div>
+        <h3>AdaBoost</h3>
+        <div class="model-results">
+            <img src="AdaBoostResults.png" alt="AdaBoost Results" class="results-img">
+            <img src="AdaBoostConf.png" alt="AdaBoostConf Confusion Matrix" class="matrix-img">
+          </div>
+        <h3>Gradient Boosting</h3>
+        <div class="model-results">
+            <img src="GradientResults.png" alt="Gradient Results" class="results-img">
+            <img src="GradientConf.png" alt="Gradient Confusion Matrix" class="matrix-img">
+          </div>
+        <h3>Logistic Regression</h3>
+        <div class="model-results">
+            <img src="LogisticResults.png" alt="Logistic Results" class="results-img">
+            <img src="LogisticConf.png" alt="Logistic Confusion Matrix" class="matrix-img">
+          </div>
+        <h3>GaussianNB</h3>
+        <div class="model-results">
+            <img src="GaussianResults.png" alt="GaussianResults" class="results-img">
+            <img src="GaussianConf.png" alt="Gaussian Confusion Matrix" class="matrix-img">
+          </div>
+        <h3>SVM</h3>
+        <div class="model-results">
+            <img src="SVMResults.png" alt="SVM Results" class="results-img">
+            <img src="SVMConf.png" alt="SVM Confusion Matrix" class="matrix-img">
+          </div>
+        <h3>Decision Tree</h3>
+        <div class="model-results">
+            <img src="DTResults.png" alt="Decision Tree Results" class="results-img">
+            <img src="DTConf.png" alt="Decision Tree Confusion Matrix" class="matrix-img">
+          </div>
+        <h3>Neural Network</h3>
+        <div class="model-results">
+          <img src="NNresults.png" alt="Neural Network Results" class="results-img">
+          <img src="NNConf.png" alt="Neural Network Confusion Matrix" class="matrix-img">
+        </div>
+
+        <p>The effectiveness of each model varied by company, is influenced by the distinct characteristics of their stock and news data. Here is an overview of the accuracy of the models tested:</p>
+
         <div class="image-container">
 <img src="NVDAGraph.png" alt="NVIDIA Model Overview" class="overview-img-nvidia">
 <img src="MetaGraph.png" alt="META Model Overview" class="overview-img-meta">
@@ -118,11 +169,13 @@
 </tbody>
 </table>
 
+<h2>Conclusions and Future Work</h2>
+<p>Based on our results from these models tested on three different companies, we determined that the SVM classifier and the Neural Network are the most accurate at being able to determine if a stock is likely to have an upward or downward trend. In the future, to improve these models, we should include more news data as well as account for bias in the articles. Although we only tested these models for three companies, we could expand the scope and look into other companies as well to get a more comprehensive overview of how stock data is changing over time and in the future.</p>
 
-        
 
 <h2>Demo and Replication</h2>
 <p>A demo using the DecisionTreeClassifier is available to illustrate the impact of including sentiment data on model performance. Interested parties are encouraged to replicate our results or explore the dataset independently.</p>
+
 
 <h2>Acknowledgements</h2>
 <ul>
