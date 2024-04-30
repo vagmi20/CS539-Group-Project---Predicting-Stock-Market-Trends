@@ -22,7 +22,7 @@
         <p>We fetch the last 2 years (2022-01-03 to 2023-12-29) of stock data specifically for APPLE, NVIDIA, and META. Yahoo Finance is used to retrieve stock data for all companies. For stock features, we use the Adjusted Close Price, Open, High, Low, Close Price, and Volume.</p>
 
         <h3>News Data</h3>
-        <p>For gathering the news data, we used Google News to query relevant articles from the Google News database. We use both the stock ticker name and the full name of each company as search words. Since NewsAPI is limited and can only provide brief sentences from the articles, we manually webscrape the data by querying the links instead and using BeautifulSoup + URLLib3 to parse the html into text. For parsing only relevant information within each article, we grab text from only <p> and <title> tags in the webpage html. </title></p>
+        <p>For gathering the news data, we used Google News to query relevant articles from the Google News database. We use both the stock ticker name and the full name of each company as search words. Since NewsAPI is limited and can only provide brief sentences from the articles, we manually webscrape the data by querying the links instead and using BeautifulSoup + URLLib3 to parse the html into text. For parsing only relevant information within each article, we grab text from only html paragraph and title elements in the webpage data.</p>
 
         <h3>Sentiment Data</h3>
         <p>To obtain the sentiment for each article for a single company, we feed the scraped content (including the title) of each article into a sentiment analysis model. For the model, we use a distilled version of <a href="https://huggingface.co/mrm8488/distilroberta-finetuned-financial-news-sentiment-analysis">RoBERTa-base-model</a> pretrained on the <a href="https://huggingface.co/datasets/financial_phrasebank">financial_phrasebank</a> dataset. Pretraining on financial phrases will improve the ability of the sentiment model to capture valuable information from words within the financial vernacular. Furthermore, financial words will have more weight in the final sentiment analysis.</p>
@@ -55,6 +55,12 @@
     
         <h3>Feature Engineering</h3>
         <p>We combine our 7 stock features mentioned in the Stock Data section with 6 crafted sentiment features. For our 6 sentiment features, we use the number of articles and the mean probability by sentiment class (negative, neutral, positive). Note that because stock data is not available for all days in the past 2 years (due to days where market was closed), sentiment for certain days are removed. This allows perfect joins over the data tables to occur. Our list of final features is as follows:</p>
+        <style>
+          ul {
+              list-style-type: disc; /* Use disc style bullets */
+              padding-left: 20px; /* Add left padding for indentation */
+          }
+        </style>
         <ul>
           <li>Adj Close</li>
           <li>Close</li>
