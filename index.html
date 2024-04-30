@@ -57,23 +57,23 @@
         <p>We combine our 7 stock features mentioned in the Stock Data section with 6 crafted sentiment features. For our 6 sentiment features, we use the number of articles and the mean probability by sentiment class (negative, neutral, positive). Note that because stock data is not available for all days in the past 2 years (due to days where market was closed), sentiment for certain days are removed. This allows perfect joins over the data tables to occur. Our list of final features is as follows:</p>
         <style>
           ul {
-              list-style-type: disc; /* Use disc style bullets */
-              padding-left: 20px; /* Add left padding for indentation */
+              list-style-type: disc; 
+              padding-left: 20px; 
           }
         </style>
         <ul>
-          <li>Adj Close</li>
+          <li>Adjusted Close</li>
           <li>Close</li>
           <li>High</li>
           <li>Low</li>
           <li>Open</li>
           <li>Volume</li>
-          <li>mean_neg_sentiment_prob</li>
-          <li>mean_neu_sentiment_prob</li>
-          <li>mean_pos_sentiment_prob</li>
-          <li>neg_sentiment_cnt</li>
-          <li>neu_sentiment_cnt</li>
-          <li>pos_sentiment_cnt</li>
+          <li>Mean Negative Sentiment Probability</li>
+          <li>Mean Neutral Sentiment Probability</li>
+          <li>Mean Positive Sentiment Probability</li>
+          <li>Count of Articles with Negative Sentiment</li>
+          <li>Count of Articles with Neutral Sentiment</li>
+          <li>Count of Articles with Positive Sentiment</li>
       </ul>
       
         </p> To generate target labels for our data, we compare the next day's adjusted close price to prior day's price and assign label of 1 (Uptrend) if it's greater; else 0 (Downtrend).</p>
