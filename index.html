@@ -54,7 +54,7 @@
     
     
         <h3>Feature Engineering</h3>
-        <p>We combine our 7 stock features mentioned in the Stock Data section with 6 crafted sentiment features. For our 6 sentiment features, we use the number of articles and the mean probability by sentiment class (negative, neutral, positive). Note that because stock data is not available for all days in the past 2 years (due to days where market was closed), sentiment for certain days are removed. This allows perfect joins over the data tables to occur. Our list of final features is as follows:</p>
+        <p>We combine our 7 stock features mentioned in the Stock Data section with 6 crafted sentiment features. Since we gather ~3-10 articles per day, we consolidate sentiment from all articles via averaging their sentiment class probabilities and tallying their argmax classes. For our 6 sentiment features, we use the number of articles and the mean probability by sentiment class (negative, neutral, positive). Note that because stock data is not available for all days in the past 2 years (due to days where market was closed), sentiment for certain days are removed. This allows perfect joins over the data tables to occur. Our list of final features is as follows:</p>
         <style>
           ul {
               list-style-type: disc; 
