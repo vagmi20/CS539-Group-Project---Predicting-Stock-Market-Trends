@@ -19,23 +19,27 @@
 
         <h2>Data</h2>
         <h3>Stock Data</h3>
-        <p>We fetch the last 2 years (2022-01-03 to 2023-12-29) of stock data specifically for APPLE, NVIDIA, and META. Yahoo Finance is used to retrieve stock data for all companies. Outputs are saved in the format <code>{ticker_name}_stock.csv</code>.</p>
+        <p>We fetch the last 2 years (2022-01-03 to 2023-12-29) of stock data specifically for APPLE, NVIDIA, and META. Yahoo Finance is used to retrieve stock data for all companies. For stock features, we use the Adjusted Close Price, Open, High, Low, Close Price, and Volume.</p>
 
         <h3>News Data</h3>
-        <p>For gathering the news data, we used Google News to query relevant articles from the Google News database. We use both the stock ticker name and the full name of each company as search words. Since NewsAPI is limited and can only provide brief sentences from the articles, we manually webscrape the data by querying the links instead and using BeautifulSoup + URLLib3 to parse the HTML into text. News articles for companies are saved as <code>{ticker_name}_news.csv</code>.</p>
+        <p>For gathering the news data, we used Google News to query relevant articles from the Google News database. We use both the stock ticker name and the full name of each company as search words. Since NewsAPI is limited and can only provide brief sentences from the articles, we manually webscrape the data by querying the links instead and using BeautifulSoup + URLLib3 to parse the html into text. For parsing only relevant information within each article, we grab text from only <p> and <title> tags in the webpage html. </title></p>
 
         <h3>Sentiment Data</h3>
-        <p>To obtain the sentiment for each article for a single company, we feed the scraped content (including the title) of each article into a sentiment analysis model. For the model, we use a distilled version of <a href="https://huggingface.co/mrm8488/distilroberta-finetuned-financial-news-sentiment-analysis">RoBERTa-base-model</a> pretrained on the <a href="https://huggingface.co/datasets/financial_phrasebank">financial_phrasebank</a> dataset. Sentiment output files are saved as <code>{ticker_name}_sentiment.csv</code>.</p>
+        <p>To obtain the sentiment for each article for a single company, we feed the scraped content (including the title) of each article into a sentiment analysis model. For the model, we use a distilled version of <a href="https://huggingface.co/mrm8488/distilroberta-finetuned-financial-news-sentiment-analysis">RoBERTa-base-model</a> pretrained on the <a href="https://huggingface.co/datasets/financial_phrasebank">financial_phrasebank</a> dataset. Pretraining on financial phrases will improve the ability of the sentiment model to capture valuable information from words within the financial vernacular. Furthermore, financial words will have more weight in the final sentiment analysis.</p>
+
+        <h3>Link to Data</h3>
+        <p>All data csvs can be found <a href="https://github.com/vagmi20/CS539-Group-Project---Predicting-Stock-Market-Trends/tree/main/data">here</a>.</p>
 
         <h2>Tools and Methods</h2>
-        
-        <p>All code is written in Python using Google Collab. Simply running the pip install cells should be sufficient to download dependencies. Note that there are Google Drive import cells which may be ignored. All necessary files are given in the data folder.</p>
+
 
         <p>Additionally, there are some technologies utilized that supported our work in this project:</p>
 <ul>
     <li><img src="Yahoo.png" alt="Yahoo Finance Logo" class="tech-logo"> Yahoo Finance API: used to gather stock data for the three companies</li>
     <li><img src="gNews.png" alt="Google News Logo" class="tech-logo"> Google News API: used to retrieve the news data for a particular company</li>
     <li><img src="hFace.png" alt="Hugging Face Logo" class="tech-logo"> Hugging Face: used to obtain the sentiment scores for the news data</li>
+    <li><img src="urllib3.png" alt="urllib3 Logo" class="tech-logo"> urllib3: used to request webpage data</li>
+    <li><img src="bs4.png" alt="BeautifulSoup Logo" class="tech-logo"> BeautifulSoup: used to parse webpage html into plaintext</li>
 </ul>
 
 
@@ -48,15 +52,28 @@
       </li>
       </ul>
     
-        <p>For manually generating the stock and news data, run all cells in <code>datagen/Stock_and_News_Data.ipynb</code>. Note, we already provide these files in <code>data</code>. If you would like to run it yourself, please change the csv paths whenever <code>.to_csv()</code> is mentioned.</p>
-
-        <p>For running sentiment analysis, run all cells in <code>datagen/Sentiment_Analysis.ipynb</code>. We also provide these files in <code>data</code>. Ensure the <code>csv=</code> and <code>.to_csv()</code> paths are changed accordingly.</p>
-
+    
         <h3>Feature Engineering</h3>
-        <p>Run all cells in <code>datagen/Feature_Engineering.ipynb</code> to combine stock and sentiment features. Again, ensure the <code>csv=</code> and <code>.to_csv()</code> paths are changed accordingly. Note, this data is already provided in <code>data/{ticker_name}_stock_with_sentiment.csv</code>.</p>
+        <p>We combine our 7 stock features mentioned in the Stock Data section with 6 crafted sentiment features. For our 6 sentiment features, we use the number of articles and the mean probability by sentiment class (negative, neutral, positive). Note that because stock data is not available for all days in the past 2 years (due to days where market was closed), sentiment for certain days are removed. This allows perfect joins over the data tables to occur. Our list of final features is as follows:</p>
+        <ul>
+          <li>Adj Close</li>
+          <li>Close</li>
+          <li>High</li>
+          <li>Low</li>
+          <li>Open</li>
+          <li>Volume</li>
+          <li>mean_neg_sentiment_prob</li>
+          <li>mean_neu_sentiment_prob</li>
+          <li>mean_pos_sentiment_prob</li>
+          <li>neg_sentiment_cnt</li>
+          <li>neu_sentiment_cnt</li>
+          <li>pos_sentiment_cnt</li>
+      </ul>
+      
+        </p> To generate target labels for our data, we compare the next day's adjusted close price to prior day's price and assign label of 1 (Uptrend) if it's greater; else 0 (Downtrend).</p>
 
         <h3>Training and Inference</h3>
-        <p>For training all models and obtaining inference results, run the <code>Predicting_Stock_Trend_With_Sentiment.ipynb</code> notebook. Make sure to change the <code>csv</code> path with the correct local csv containing both stock and sentiment features.</p>
+        <p>We preprocess our data for training by standardizing features via removal of the mean and scaling to unit variance. For performing the train-test split, it's important to note that using SKLearn's built-in function is not advisable because it randomly splits the data. Due to the time-series aspect of the data, the train-test split is done sequentially by using the last 97 days (~20% of data) of stock data as the test. The first 391 days are used for training. After performing the train-test split, we get 198 samples for the Uptrend class and 193 samples for the Downtrend class. The overall train set is quite balanced. The testing set consists of 56 Uptrend and 41 Downtrend samples.</p>
 
         <h2>Results</h2>
         <p>We ran 8 machine learning models to determine which one was able to predict if a company was going to have an upward or downward trend in their stocks with the best accuracy. The accuracies for these models change based on the company we are looking at. Below we give a preview of the accuracy metrics as well as the confusion matrix specifically for NVIDIA.</p>
@@ -169,11 +186,20 @@
 
         
 
-        <h2>Demo</h2>
-        <p>We provide demo code that uses the <code>DecisionTreeClassifier</code> model. The demo shows how performance changes with and without sentiment features and also how different news sentiment affects the model's prediction for one day's worth of stock data. Run <code>Demo.ipynb</code> for the demo. Make sure to change <code>csv</code> paths for local usage.</p>
+        <h2>Effect of Sentiment Features</h2>
+        <p>We perform a small experiment with the Decision Tree classifier to understand how much the sentiment features make a difference when predicting stock trends. We perform prediction on the test data with and without sentiment features for comparison.</p>
+        <h3>Without Sentiment Features</h3>
+        <div class="no-sentiment-results">
+            <img src="nosent.png" alt="nosent Results" class="no-sent-results-img">
+            <img src="nosent_cft.png" alt="nosent Confusion Matrix" class="no-sent-matrix-img">
+        </div>
+        <h3>With Sentiment Features</h3>
+        <div class="sentiment-results">
+            <img src="sent.png" alt="sent Results" class="sent-results-img">
+            <img src="sent_cft.png" alt="sent Confusion Matrix" class="sent-matrix-img">
+        </div>
+        <p>We find that sentiment does signifcantly improve stock trend prediction and improves accuracy by ~9%. The Decision Tree model trained without sentiment features seems to gain heavy bias towards predicting the Downtrend class while the model with sentiment features has less overall bias.</p>
 
-        <h2>Acknowledgements</h2>
-            <ul><a href="https://github.com/alisonmitchell/Stock-Prediction">Alison Mitchell - Stock Prediction</a></ul>
     </div>
 </body>
 </html>
