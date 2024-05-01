@@ -140,7 +140,13 @@ li {
     width: 50%;
     margin-left: auto;
     margin-right: auto;
-    display: block; /* This line is crucial for centering */
+    display: block;
+}
+.nn-img {
+    width: 25%;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
 }
 
 .model-overview-table {
@@ -170,4 +176,3 @@ td.highlight {
     background-color: #4CAF50;
     color: #FFFFFF; 
 }
-
