@@ -125,7 +125,9 @@
           <img src="NNresults.png" alt="Neural Network Results" class="results-img">
           <img src="NNConf.png" alt="Neural Network Confusion Matrix" class="matrix-img">
         </div>
-
+        <p>Overall architecture of the Deep Learning Neural Network:</p>
+        <p>The architecture of this neural network consists of seven fully connected layers, with neuron counts decreasing from 2048 to 2. Each hidden layer incorporates batch normalization to stabilize learning, a ReLU activation function for non-linearity, and dropout with rates decreasing from 0.5 to 0.1 to prevent overfitting. The network employs weight decay as part of its regularization strategy to limit weight sizes and uses the Adam optimizer with an initial learning rate of 0.001. A ReduceLROnPlateau learning rate scheduler adjusts the learning rate based on validation performance to optimize training of the model.</p>
+        <img src="NNArch.png" alt="Neural Network Archeticure" class="nn-img">
         <h2>Overview of Models</h2>
         <p>The effectiveness of each model varies by company, but is influenced by the distinct characteristics of their stock and news data. Here is an overview of the accuracy of the models tested on each company.</p>
         <div class="image-container">
